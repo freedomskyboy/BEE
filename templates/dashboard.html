@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>📊 Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>📊 Message Type Statistics</h1>
+    <canvas id="myChart" width="400" height="200"></canvas>
+    <br>
+    <form method="get">
+        <label>Start Date:</label>
+        <input type="date" name="start">
+        <label>End Date:</label>
+        <input type="date" name="end">
+        <button type="submit">🔍 Filter</button>
+    </form>
+    <br>
+    <a href="/export"><button>⬇️ Export Excel</button></a>
+
+    <script>
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const stats = {{ stats | tojson }};
+        const chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(stats),
+                datasets: [{
+                    label: 'Messages',
+                    data: Object.values(stats),
+                    borderWidth: 1
+                }]
+            },
+        });
+    </script>
+</body>
+</html>
